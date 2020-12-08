@@ -59,8 +59,20 @@
     		</button>
     		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     			<div class="navbar-nav ml-auto">
-    				<a class="nav-item nav-link" href="">SIGNUP</a>
-    				<a class="nav-item nav-link" href="">LOGIN</a>
+                    {% if user.is_authenticated %}
+                     <!--  document.getElementById('logout').submit() whenever the user clicks on logout the form is called-->
+                    <a class="nav-item nav-link" href="javascript:{document.getElementById('logout').submit()}">LOGOUT</a>
+                    <!--  logout must be done with a POST method to not interfer with navigator auto calls-->
+                    <form id='logout' method='POST' action="{% url 'accounts:logout' %}">
+                        {% csrf_token %}
+                        <input type="hidden"/>
+                    </form>
+    				
+                    {% else %}
+                    <a class="nav-item nav-link" href="{% url 'accounts:signup' %}">SIGNUP</a>
+                    <a class="nav-item nav-link" href="{% url 'accounts:login' %}">LOGIN</a>
+
+                    {% endif %}
     				
     			</div>
     		</div>
